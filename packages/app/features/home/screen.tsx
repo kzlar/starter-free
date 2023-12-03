@@ -1,6 +1,5 @@
 import {
   Anchor,
-  Button,
   H1,
   Paragraph,
   Separator,
@@ -8,10 +7,64 @@ import {
   useToastController,
   XStack,
   YStack,
+  Stack,
+  styled,
+  createStyledContext,
+  SizeTokens,
+  withStaticProperties,
+  Text,
 } from '@my/ui'
 import { ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
 import React, { useState } from 'react'
 import { useLink } from 'solito/link'
+
+export const ButtonContext = createStyledContext({
+  size: '$md' as SizeTokens,
+})
+
+const ButtonFrame = styled(Stack, {
+  name: 'Button',
+  context: ButtonContext,
+  backgroundColor: '$background',
+  alignItems: 'center',
+  flexDirection: 'row',
+  p: '$3',
+
+  variants: {
+    size: {
+      '...size': (name, { tokens }) => {
+        return {
+          height: tokens.size[name],
+          borderRadius: tokens.radius[name],
+          gap: tokens.space[name].val * 0.2,
+        }
+      },
+    },
+  } as const,
+})
+
+const ButtonText = styled(Text, {
+  name: 'ButtonText',
+  context: ButtonContext,
+  color: '$color',
+  userSelect: 'none',
+  pressStyle: {
+    backgroundColor: 'red',
+  },
+
+  variants: {
+    size: {
+      '...fontSize': (name, { font }) => ({
+        fontSize: font?.size[name],
+      }),
+    },
+  } as const,
+})
+
+export const Button = withStaticProperties(ButtonFrame, {
+  Text: ButtonText,
+  Props: ButtonContext.Provider,
+})
 
 export function HomeScreen() {
   const linkProps = useLink({
@@ -46,7 +99,13 @@ export function HomeScreen() {
       </YStack>
 
       <XStack>
-        <Button {...linkProps}>Link to user</Button>
+        <Button
+          onPress={() => {
+            alert('??')
+          }}
+        >
+          <Button.Text>Link to user</Button.Text>
+        </Button>
       </XStack>
 
       <SheetDemo />
@@ -63,8 +122,8 @@ function SheetDemo() {
     <>
       <Button
         size="$6"
-        icon={open ? ChevronDown : ChevronUp}
-        circular
+        // icon={open ? ChevronDown : ChevronUp}
+        // circular
         onPress={() => setOpen((x) => !x)}
       />
       <Sheet
@@ -82,8 +141,8 @@ function SheetDemo() {
           <Sheet.Handle />
           <Button
             size="$6"
-            circular
-            icon={ChevronDown}
+            // circular
+            // icon={ChevronDown}
             onPress={() => {
               setOpen(false)
               toast.show('Sheet closed!', {
