@@ -5,6 +5,8 @@ import {
   Paragraph,
   Separator,
   Sheet,
+  Square,
+  styled,
   useToastController,
   XStack,
   YStack,
@@ -12,6 +14,13 @@ import {
 import { ChevronDown, ChevronUp } from '@tamagui/lucide-icons'
 import React, { useState } from 'react'
 import { useLink } from 'solito/link'
+
+const Test = styled(Square, {
+  $gtSm: {
+    backgroundColor: 'red'
+  }
+})
+
 
 export function HomeScreen() {
   const linkProps = useLink({
@@ -22,6 +31,7 @@ export function HomeScreen() {
     <YStack f={1} jc="center" ai="center" p="$4" space>
       <YStack space="$4" maw={600}>
         <H1 ta="center">Welcome to Tamagui.</H1>
+        <Test h={50} w={50} $gtSm={{h:100, w:100}} borderWidth={1} borderColor='yellow'/>
         <Paragraph ta="center">
           Here's a basic starter to show navigating from one screen to another. This screen uses the
           same code on Next.js and React Native.
