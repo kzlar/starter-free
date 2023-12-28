@@ -20,6 +20,9 @@ export function HomeScreen() {
 
   return (
     <YStack f={1} jc="center" ai="center" p="$4" space>
+      <YStack group='Button' h={100} w={100} backgroundColor='green' jc='center' ai='center'>
+        <ChevronDown color='black' $group-Button-hover={{color:'red'}} />
+      </YStack>
       <YStack space="$4" maw={600}>
         <H1 ta="center">Welcome to Tamagui.</H1>
         <Paragraph ta="center">
